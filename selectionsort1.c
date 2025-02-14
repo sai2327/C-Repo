@@ -1,19 +1,16 @@
 #include<stdio.h>
-void Selection_sort(int A[],int n){
-	int i , j;
-		for(i=0;i<n;i++){
-		int index = i;
-		//select the indexes in the order
-		for(j=i;j<n;j++){
-			if(A[index]>A[j]){//find the minimum element in the index
-				index = j;
+void Selection_sort(int arr[],int n){
+	for(int i=0;i<n;i++){
+		int idx=i;
+		for(int j=i;j<n;j++){
+			if(arr[idx]>arr[j]){ //2 3 1 5 4 
+				idx=j;
 			}
 		}
-		 int temp = A[index];// swap the number with the small element in the index
-			A[index] = A[i];
-			A[i] = temp;
+		int temp=arr[idx];
+		arr[idx]=arr[i];
+		arr[i]=temp;
 	}
-	
 }
 int main(){
 	int n,i,j;
