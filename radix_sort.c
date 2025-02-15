@@ -1,61 +1,38 @@
+//in radix sort elements are not swapped they sagregated and erearranged
 #include<stdio.h>
-void prp(int A[],int n){
-// print the output
-	int i;
-	for(i=0;i<n;i++){
-	printf("%d ",A[i]);
-}
-}
-int get_max(int A[],int n){
-// find the maximum number
-	int i;
-	int max = A[0];
-	for(i=1;i<n;i++){
-		if(max<A[i]){
-			max = A[i];
+void radix_sort(int arr[],int n){
+	int bucket[10][n],max=arr[0]; //declaration of bucket 2d array
+	for(int i=1;i<n;i++){  //to find out max element
+		if(max<arr[i]) max=arr[i];
+	}
+	int size_of_max=log10(max)+1,e=1; //find out the size of maximum element in the array
+	while(size_of_max--){   //run the loop for number of digits in maximum element
+		int cnt[10]={0}; //indicates the number of elements in buckets and position 
+		for(int i=0;i<n;i++){ //segregation of array elements into buckets
+			int pos=(arr[i]/e)%10; //using a integer valiable to know in which bucket the element has to be placed
+			bucket[pos][cnt[pos]]=arr[i]; //arranging elements in array to buckets
+			cnt[pos]++; //increasing cnt as to know how many elements are present in bucket 
 		}
-	}
-	return max;
-}
-void radix_sort(int A[],int n){
-	int m = get_max(A,n);
-	int bucket[10][n],c=0;
-	while(m){
-		int e = 1,j,i;
-		int count[10] = {0}; 
-		// segregationn of numbers into buckets
-		for(i=0;i<n;i++){
-			int pos = (A[i]/e)%10;
-			//find the positioon of the bucket entry
-			bucket[pos][count[pos]++] = A[i];
-			 //store the values according to their places
+		int k=0; //variable used to place elements in bucket to the arrray
+		for(int i=0;i<10;i++){ //upto rows of bucket 2d array
+			for(int j=0;j<cnt[i];j++){ //upto last column in the array
+				arr[k]=bucket[i][j];//rearranging elements into array from bucket 
+				k++;
+			}
 		}
-		// Reconstruction
-		for(i=0;i<10;i++){ 
-		// store the numbers into original array
-		for(j=0;j<count[i];j++){
-			A[c] = bucket[i][j];
-			printf("//%d ",A[c]);
-			c++;
+		e*=10; //increment of e to obtain unit digit in first pass and ten's digit in the second pass
 	}
-	printf("\n");
-}
-		e *= 10;
-		// check the next place digit
-		m /= 10;
-		// for while to run upto last place digit
-	}
-	prp(A,n);
-	// recall the function for next place digit
-	
 }
 int main(){
 	int n;
-	scanf("%d",&n);
-	int i,A[n];
+	scanf("%d",&n); //read size of array
+	int i,A[n]; //declare array of size n
 	for(i=0;i<n;i++){
-		scanf("%d",&A[i]);
+		scanf("%d",&A[i]);//read n elements
 	}
-	radix_sort(A,n);
+	radix_sort(A,n); //caling radixsort function
+	for(int i=0;i<n;i++){
+		printf("%d",A[i]);
+	}
 	return 0;
 }
