@@ -43,8 +43,5 @@ int main(){
 		scanf("%d",&A[i]);
 	}
 	MergeSort(A,n,0,n-1);
-	for(i=0;i<n;i++)
-	{
-	printf("%d ",A[i]);
-}
+	for(i=0;i<n;i++) printf("%d ",A[i]);
 }
